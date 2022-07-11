@@ -1,0 +1,29 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+ctrl alt I - insert code chunk
+
+```{r}
+
+2+5
+
+4+9
+
+```
+```{r}
+
+```
+
+Ctrl-shift-enter - run whole chunk
+ctrl-enter-run line cursor is on / run selected code
+
+ctrl - shift - P command pallet - lists commands and shortcuts
+
+```{r}
+
+mtcars
+
+```
+
