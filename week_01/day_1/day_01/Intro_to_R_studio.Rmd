@@ -27,3 +27,70 @@ mtcars
 
 ```
 
+
+### Data Types
+
+
+
+
+Categories
+Nominal
+  discrete - Eg Texas
+  ordinal - 1st, 2nd , 3rd etc. Season of the year, things rated from 1st to 10th. An implicit order
+  
+  
+Numeric
+  Ratio
+  Interval
+  Continous - eg height 3.445556677777 etc
+  Discrete - no inbetween - whole integers how many people live in your home
+
+
+
+
+
+```{r}
+
+dbl1 <- c(1,4,6,3)
+dbl2 <- c(1, 4, 6, 3, "x")
+ingr1 <- c(1L, 4L, 6L, 9L)
+
+class(dbl1) # continous varaibles
+class(dbl2) # Discrete values
+class(ingr1)
+
+typeof(dbl1)
+typeof(dbl2)
+typeof(ingr1)
+
+
+
+char1 <- c("a", "b", "a", "c")
+char2 <- factor(char1)
+
+
+char1
+char2
+
+typeof(char1)
+typeof(char2)
+
+class(char2)
+
+# logical
+
+typeof(c(TRUE, FALSE, TRUE, FALSE))
+
+
+```
+
+R deals with different types of data in a way that is appropriate for each type
+
+
+```{r}
+
+"jimmy"
+""
+
+```
+

@@ -1796,9 +1796,40 @@ run selected code</p>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<div id="data-types" class="section level3">
+<h3>Data Types</h3>
+<p>Categories Nominal discrete - Eg Texas ordinal - 1st, 2nd , 3rd etc.
+Season of the year, things rated from 1st to 10th. An implicit order</p>
+<p>Numeric Ratio Interval Continous - eg height 3.445556677777 etc
+Discrete - no inbetween - whole integers how many people live in your
+home</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHlwZW9mKGMoVFJVRSwgRkFMU0UsIFRSVUUsIEZBTFNFKSlcblxuYGBgIn0= -->
+<pre class="r"><code>typeof(c(TRUE, FALSE, TRUE, FALSE))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwibG9naWNhbFwiXG4ifQ== -->
+<pre><code>[1] &quot;logical&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>R deals with different types of data in a way that is appropriate for
+each type</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5cImppbW15XCJcblwiXCJcblxuYGBgIn0= -->
+<pre class="r"><code>
+&quot;jimmy&quot;
+&quot;&quot;
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpjdHJsIGFsdCBJIC0gaW5zZXJ0IGNvZGUgY2h1bmsNCg0KYGBge3J9DQoNCjIrNQ0KDQo0KzkNCg0KYGBgDQpgYGB7cn0NCg0KYGBgDQoNCkN0cmwtc2hpZnQtZW50ZXIgLSBydW4gd2hvbGUgY2h1bmsNCmN0cmwtZW50ZXItcnVuIGxpbmUgY3Vyc29yIGlzIG9uIC8gcnVuIHNlbGVjdGVkIGNvZGUNCg0KY3RybCAtIHNoaWZ0IC0gUCBjb21tYW5kIHBhbGxldCAtIGxpc3RzIGNvbW1hbmRzIGFuZCBzaG9ydGN1dHMNCg0KYGBge3J9DQoNCm10Y2Fycw0KDQpgYGANCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpjdHJsIGFsdCBJIC0gaW5zZXJ0IGNvZGUgY2h1bmsNCg0KYGBge3J9DQoNCjIrNQ0KDQo0KzkNCg0KYGBgDQpgYGB7cn0NCg0KYGBgDQoNCkN0cmwtc2hpZnQtZW50ZXIgLSBydW4gd2hvbGUgY2h1bmsNCmN0cmwtZW50ZXItcnVuIGxpbmUgY3Vyc29yIGlzIG9uIC8gcnVuIHNlbGVjdGVkIGNvZGUNCg0KY3RybCAtIHNoaWZ0IC0gUCBjb21tYW5kIHBhbGxldCAtIGxpc3RzIGNvbW1hbmRzIGFuZCBzaG9ydGN1dHMNCg0KYGBge3J9DQoNCm10Y2Fycw0KDQpgYGANCg0KDQojIyMgRGF0YSBUeXBlcw0KDQoNCg0KDQpDYXRlZ29yaWVzDQpOb21pbmFsDQogIGRpc2NyZXRlIC0gRWcgVGV4YXMNCiAgb3JkaW5hbCAtIDFzdCwgMm5kICwgM3JkIGV0Yy4gU2Vhc29uIG9mIHRoZSB5ZWFyLCB0aGluZ3MgcmF0ZWQgZnJvbSAxc3QgdG8gMTB0aC4gQW4gaW1wbGljaXQgb3JkZXINCiAgDQogIA0KTnVtZXJpYw0KICBSYXRpbw0KICBJbnRlcnZhbA0KICBDb250aW5vdXMgLSBlZyBoZWlnaHQgMy40NDU1NTY2Nzc3NzcgZXRjDQogIERpc2NyZXRlIC0gbm8gaW5iZXR3ZWVuIC0gd2hvbGUgaW50ZWdlcnMgaG93IG1hbnkgcGVvcGxlIGxpdmUgaW4geW91ciBob21lDQoNCg0KDQoNCg0KYGBge3J9DQoNCmRibDEgPC0gYygxLDQsNiwzKQ0KZGJsMiA8LSBjKDEsIDQsIDYsIDMsICJ4IikNCmluZ3IxIDwtIGMoMUwsIDRMLCA2TCwgOUwpDQoNCmNsYXNzKGRibDEpICMgY29udGlub3VzIHZhcmFpYmxlcw0KY2xhc3MoZGJsMikgIyBEaXNjcmV0ZSB2YWx1ZXMNCmNsYXNzKGluZ3IxKQ0KDQp0eXBlb2YoZGJsMSkNCnR5cGVvZihkYmwyKQ0KdHlwZW9mKGluZ3IxKQ0KDQoNCg0KY2hhcjEgPC0gYygiYSIsICJiIiwgImEiLCAiYyIpDQpjaGFyMiA8LSBmYWN0b3IoY2hhcjEpDQoNCg0KY2hhcjENCmNoYXIyDQoNCnR5cGVvZihjaGFyMSkNCnR5cGVvZihjaGFyMikNCg0KY2xhc3MoY2hhcjIpDQoNCiMgbG9naWNhbA0KDQp0eXBlb2YoYyhUUlVFLCBGQUxTRSwgVFJVRSwgRkFMU0UpKQ0KDQoNCmBgYA0KDQpSIGRlYWxzIHdpdGggZGlmZmVyZW50IHR5cGVzIG9mIGRhdGEgaW4gYSB3YXkgdGhhdCBpcyBhcHByb3ByaWF0ZSBmb3IgZWFjaCB0eXBlDQoNCg0KYGBge3J9DQoNCiJqaW1teSINCiIiDQoNCmBgYA0KDQo=</div>
 
 
 
