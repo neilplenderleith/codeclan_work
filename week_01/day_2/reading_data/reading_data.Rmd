@@ -1,0 +1,85 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+
+```{r}
+library(tidyverse)
+
+
+```
+
+```{r}
+
+dog_bites <- read_csv("data/dog_bites.csv")
+
+```
+
+```{r}
+dog_bites
+```
+```{r}
+library(readxl)
+
+
+```
+
+```{r}
+seedmix <- read_excel("data/edinburgh_seedmix.xlsx")
+```
+```{r}
+seedmix
+```
+
+```{r}
+seedmix_north <- read_excel("data/edinburgh_seedmix.xlsx",
+                            sheet = "North Neighbourhood")
+seedmix_north
+```
+
+```{r}
+excel_sheets("data/edinburgh_seedmix.xlsx") # tells the names of sheets in an excel file
+```
+
+```{r}
+south_seed <- read_excel("data/edinburgh_seedmix.xlsx", sheet = "South Neighbourhood")
+south_seed
+```
+
+```{r}
+south_seed <- read_excel("data/edinburgh_seedmix.xlsx", sheet = 4)
+south_seed
+```
+
+
+```{r}
+library(CodeClanData)
+```
+
+```{r}
+students
+```
+
+
+```{r}
+write_csv(students, "data/students2.csv") # can write csv files too
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
