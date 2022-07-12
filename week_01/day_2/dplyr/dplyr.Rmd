@@ -1,0 +1,329 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+
+library(tidyverse)
+library(CodeClanData)
+
+```
+
+```{r}
+
+students
+
+```
+
+```{r}
+all_deaths
+```
+
+```{r}
+nrow(all_deaths)
+```
+```{r}
+ncol(all_deaths)
+```
+```{r}
+dim(all_deaths) # rows and columns
+```
+
+```{r}
+names(all_deaths)
+```
+
+```{r}
+head(all_deaths)
+```
+
+```{r}
+tail(all_deaths, 1)
+```
+
+```{r}
+glimpse(all_deaths)
+```
+
+```{r}
+summary(all_deaths)
+```
+
+```{r}
+view(all_deaths)
+```
+
+
+### Select
+
+```{r}
+select(all_deaths, name, allegiances, gender, nobility, year_of_death) # pick which columns to pull from the data create new dataframe
+```
+
+```{r}
+deaths_no_name <- select(all_deaths, -name) # use minus (or !) to discount columns
+```
+
+```{r}
+select(all_deaths, contains("death"))
+```
+
+```{r}
+select(all_deaths, year_of_death, book_of_death, death_chapter)
+```
+
+```{r}
+select(all_deaths, book_of_death, book_intro_chapter, book1_GoT, book2_CoK, book3_SoS, book4_FfC, book5_DwD)
+```
+
+```{r}
+select(all_deaths, contains("book"))
+```
+
+```{r}
+select(all_deaths, 1,2,3) # picks columns by their number, is ORDER SPECIFIC 
+```
+
+```{r}
+select(all_deaths, 1:5) # ranges also work
+```
+
+```{r}
+select(all_deaths, name:book_of_death) # ranges also work with names of solumns if they are all in a row
+```
+
+```{r}
+select(all_deaths, -c(name:book_of_death)) # also works with minus to exclude certain columnsranges also work with names of columns if they are all in a row
+```
+
+
+```{r}
+select(all_deaths, contains("death"), contains("book"))
+```
+
+
+
+
+### filter
+
+---------------------------------------------------------------------------------------------
+
+```{r}
+
+filter(all_deaths, allegiances == "Lannister") #filter where row equals a string
+
+```
+
+```{r}
+
+filter(all_deaths, allegiances != "Lannister") #filter where row equals a string
+
+```
+
+```{r}
+filter(all_deaths, allegiances %in% c("Lannister", "House Lannister")) # can use the %in% operator
+```
+
+```{r}
+filter(all_deaths, year_of_death >= 299)
+```
+
+```{r}
+filter(all_deaths, allegiances == "None")
+```
+
+```{r}
+filter(all_deaths, allegiances == "Lannister" & nobility == 1) # multiple filter example with & sign
+```
+
+```{r}
+
+filter(all_deaths, allegiances %in% c("Lannister", "House Stark"))
+
+```
+
+```{r}
+filter(all_deaths, book_intro_chapter >= 5 & book_intro_chapter <= 10)
+```
+
+```{r}
+
+filter(all_deaths, between(book_intro_chapter, 5, 10)) # same as above code uses function "between"
+
+```
+
+```{r}
+filter(all_deaths, str_detect(allegiances, "Lannister"))
+```
+
+Find where the year_of_deathis less than or equal to 299.
+Find the females (gender is 0) who are not Lannisters
+Find just the data for the characters “Jon Snow”, “Daenerys Targaryen” and “Samwell Tarly”.
+
+```{r}
+filter(all_deaths, year_of_death <= 299)
+```
+
+```{r}
+filter(all_deaths, gender == 0 & !(allegiances %in% c("Lannister", "House Lannister"))) # This is how to use the opposite of the %in% function
+```
+
+```{r}
+filter(all_deaths, name %in% c("Jon Snow", "Daenerys Targaryen", "Samwell Tarly"))
+```
+
+### arrange
+
+```{r}
+arrange(all_deaths, book_intro_chapter) # arrange dataset by a certain column
+```
+
+```{r}
+arrange(all_deaths, desc(book_intro_chapter))
+```
+
+```{r}
+arrange(all_deaths, book_of_death, death_chapter) # can arrange by multiple columns
+```
+
+Arrange all_deaths by allegiances. What happens when you arrange by a character column?
+Arrange all_deaths by allegiances and book_intro_chapter
+Arrange all_deaths by descending year_of_death
+
+```{r}
+arrange(all_deaths, allegiances)
+```
+
+```{r}
+arrange(all_deaths, allegiances, book_intro_chapter)
+```
+
+```{r}
+arrange(all_deaths, desc(year_of_death))
+```
+
+
+## mutate
+
+```{r}
+
+mutate(all_deaths, 
+       years_survived = year_of_death - 298, 
+       .after = year_of_death) 
+
+```
+
+```{r}
+mutate(all_deaths, 
+       book_of_death * 5) # adds a new column, but names it "book of death * 5"
+```
+
+
+```{r}
+mutate(all_deaths, 
+       bod = book_of_death * 5) # adds a new column, but names it "book of death * 5"
+```
+
+```{r}
+mutate(all_deaths, test = "test") # simply adds a new column, all of "test
+```
+
+```{r}
+
+mutate(all_deaths, 
+       year_of_death = is.na(year_of_death)) # returns true or false if they are NA for this column
+
+```
+
+```{r}
+mutate(all_deaths, 
+       nobility = as.logical(nobility))
+```
+
+```{r}
+mutate(all_deaths, 
+       name = as.numeric(name)) # just be wary - strings dont work well with this
+```
+
+
+```{r}
+mutate(all_deaths, avg_death = mean(year_of_death, na.rm = TRUE)) # avergaes out all year_of_death for whole table and pops into new column
+```
+
+### summarise
+
+```{r}
+summarise(all_deaths,
+          avg_death = mean(year_of_death, na.rm = TRUE),
+          sum_males = sum(gender))
+```
+
+### group_by
+
+```{r}
+group_by(all_deaths, allegiances)# grouped data into 21 groupsd depending on allegiance column
+```
+
+```{r}
+deaths_grouped <- group_by(all_deaths, allegiances)
+
+```
+
+```{r}
+
+deaths_grouped <- group_by(all_deaths, allegiances)
+
+summarise(deaths_grouped,
+          character_count = n()) # n() for each of our groups(allegiance column), returns number of rows
+```
+
+```{r}
+deaths_grouped <- group_by(all_deaths, nobility, gender)
+
+summarise(deaths_grouped,
+          char_count = n()) # return count of noble and non noble, males and females
+```
+### PIPE
+
+
+%>% pipe operator is shift-ctrl-m
+
+```{r}
+
+have_died <- filter(all_deaths, !is.na(book_of_death)) # filter out NA values
+
+died_grouped <- group_by(have_died, allegiances)
+died_counts <- summarise(died_grouped, count = n())
+
+arrange(died_counts, desc(count))
+
+```
+
+
+USING PIPE to make above code better
+
+```{r}
+all_deaths %>% 
+  filter(!is.na(book_of_death)) %>% # filter out NA values in the column book_of_death
+  group_by(allegiances) %>%   # group into allegaince groups
+  summarise(count = n()) %>% # summarise by counting entries per group
+  arrange(desc(count))      # arrange by descending count
+
+
+
+```
+
+### pull
+
+```{r}
+count <- all_deaths %>% 
+summarise(count = n()) %>% 
+pull()
+
+count
+```
+```{r}
+pull(count) # can pull variable values so we can use it as a single variable in other places
+```
+
