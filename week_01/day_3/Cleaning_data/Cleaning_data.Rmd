@@ -1,0 +1,15 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(tidyverse)
+library(janitor)
+```
+
+### Cleaning Data
+
+```{r}
+video_games <- read_csv("../steam-200k-sample.csv")
+```
+
