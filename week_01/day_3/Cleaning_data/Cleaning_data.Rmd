@@ -231,3 +231,269 @@ ggplot(comms_data_imputed_values, aes(customer_id, monthly_charges3)) +
   geom_point()
 ```
 
+
+
+### Non-Standar missing values
+
+```{r}
+comms_data
+```
+
+--
+
+NA - proper NA
+
+na
+
+N/A
+
+```{r}
+comms_data %>% 
+  filter(is.na(total_charges)) # finds the NAs only
+
+comms_data <- comms_data_imputed_values %>% 
+  mutate(total_charges = na_if(total_charges, "na"), # changes the column to turn "na" into a proper NA
+        total_charges = na_if(total_charges, "N/A")) # changes the column to turn "N/A" into a proper NA
+
+  
+```
+
+coalesce - turns NA into a value eg a mean
+
+na_if turns a value into an NA eg --, N/Aa
+
+
+```{r}
+comms_data_cleaned <- comms_data %>% 
+  mutate(payment_method = na_if(payment_method, "--"), #
+         payment_method = coalesce(payment_method, "unknown")) #puts in "unknown" in payment method in place of NA values
+comms_data_cleaned
+```
+```{r}
+comms_data_cleaned <- comms_data %>% 
+  mutate(total_charges = na_if(total_charges, "na"), # makes"na" a proper NA value
+         total_charges = na_if(total_charges, "N/A"), # makes "N/A" a proper NA value
+         payment_method = na_if(payment_method, '--'), # makes "--" a proper NA value
+         payment_method = coalesce(payment_method, 'unknown')) # makes NA in payment method column into "unknown"
+comms_data_cleaned
+```
+
+
+## Recoding
+
+```{r}
+# students_big %>% 
+# (ageyears) %>% 
+#  mutate(older_than_12 = ageyears > 12) # this makes a new column treu false for older than 12
+
+students_big %>% 
+select(ageyears) %>% 
+  mutate(older_than_12 = if_else(ageyears > 12, "Older than 12", "12 or younger")) # this makes a new column and puts in text depedning on the if then else test
+
+```
+
+
+if_else(TEST, value if TRUE, value if FALSE)
+
+```{r}
+students_big %>% 
+  select(gender) %>% 
+  mutate(gender_receded = if_else(gender == "M", "Male", "Female"))
+
+```
+
+```{r}
+students_big %>% 
+  mutate(handed = if_else(handed == "R", "Right", "Left"))
+
+```
+
+```{r}
+
+students_big %>% 
+  select(favourite_physical_activity) %>% 
+  mutate(favourite_physical_activity = if_else(favourite_physical_activity == "Football/Soccer", "Football", favourite_physical_activity))
+
+```
+
+### Recode()
+
+```{r}
+
+students_big %>% 
+  select(travel_to_school) %>% 
+  mutate(travel_to_school_recoded = recode(travel_to_school, 
+                                           "Bus" = "bus", 
+                                           "Car" = "car", 
+                                           "Walk" = "walk")) # note this is old value = new value order
+
+students_big %>% 
+  count(travel_to_school)
+
+students_big %>% 
+  select(travel_to_school) %>% 
+  mutate(travel_to_school_recoded = recode(travel_to_school, 
+                                           "Bus" = "bus", 
+                                           "Car" = "car", 
+                                           "Walk" = "walk",
+                                           .default = "other"))
+
+```
+
+```{r}
+
+students_big %>% 
+  select(ageyears) %>% 
+  mutate(ageyears_recoded = recode(ageyears, "12" = 120, # changes 12 to 120, all other values to 0
+                           .default = 0)) # generally dont use recode for numerical values
+
+
+```
+
+
+
+```{r}
+data <- read.table(header = TRUE, text="
+ subject sex control cond1 cond2 compl
+       1   M     7.9  12.3  10.7  T
+       2   F     6.3  10.6  11.1  T
+       3   F     9.5  13.1  13.8  N
+       4   M    11.5  13.4  12.9  F
+")
+
+data
+
+```
+```{r}
+data %>% 
+  mutate(subject = recode(subject, "1" = "001",  "2" = "002", "3" = "003", "4" = "004")) %>% 
+  mutate(sex = recode(sex, "M" = "Male", "F" = "Female")) %>% 
+  mutate(compl = recode(compl, "T" = "True", "F" = "False", .default = NA_character_)) # need to explicitly tell this is an NA character if other values of columns are characters
+
+
+```
+
+### Case_when
+
+```{r}
+
+x <- 1:10
+x
+
+case_when(x <= 5 ~ "A") # anything less than 5 gets set to 5, the rest to NAs
+```
+```{r}
+
+# think of this like a sieve that we drop data through passing tests on the way
+case_when(x <= 5 ~ "A", # anything less than 5 is A
+          x <= 7 ~ "B", # anything less than 7 is B
+          TRUE ~ "C")  # anything left over is assigned to C
+x
+```
+
+```{r}
+students_big %>% 
+  select(ageyears) %>% 
+  mutate(
+    age_divisible = case_when(
+      ageyears %% 2 == 0 ~ "Even",
+      ageyears %% 3 == 0 ~ "Divisible by 3",
+      ageyears %% 5 == 0 ~ "Divisible by 5",
+      TRUE               ~ "Other number"
+    )
+  )
+
+
+
+
+```
+
+```{r}
+students_big %>% 
+  select(ageyears) %>% 
+  mutate(
+    ageyears = case_when(
+      ageyears %% 2 == 0 ~ "Even",
+      ageyears %% 3 == 0 ~ "Divisible by 3",
+      ageyears %% 5 == 0 ~ "Divisible by 5",
+      TRUE               ~ as.character(ageyears) # have to be explicit in the type of variable(eg character/numeric) in this case needs to be a character - this is doubly true for NA values
+    )
+  )
+```
+
+### Session 4 dplyr
+
+# group by + mutate
+
+```{r}
+
+new_coders %>% 
+  group_by(reasons_to_code) %>% 
+  summarise(avg_exp_earn = mean(expected_earn)) # summarise by group by
+
+
+```
+
+```{r}
+
+new_coders %>% 
+  group_by(job_pref) %>% 
+  mutate(avg_exp_earn = mean(expected_earn)) %>% 
+  ungroup() # ungroup to take the groups out if going on to do more work to the dataset
+
+
+```
+
+## Window function
+
+
+
+lag and lead functions
+```{r}
+
+chinesemeal %>% 
+  mutate(last_year_cals = lag(CaloriesPerDay)) # new column with the previous years values in it
+
+
+```
+
+
+```{r}
+
+chinesemeal %>% 
+  mutate(last_year_cals = lead(CaloriesPerDay)) # new column with the next years values in it
+
+
+```
+
+
+
+
+```{r}
+
+chinesemeal %>% 
+  mutate(diff_cals = CaloriesPerDay - lag(CaloriesPerDay)) # new column with difference between the lag and the current year
+
+
+```
+
+
+
+### across function
+
+```{r}
+
+all_deaths
+
+```
+
+```{r}
+
+all_deaths %>% 
+  mutate(book1_GoT = as.logical(book1_GoT)) # changes the specified column to logical
+
+
+all_deaths %>% 
+  mutate(across(book1_GoT:book5_DwD, as.logical)) # applies the function "as.logical" across the given column names. column names can be entered as c("book1", "book2", ... etc). Other functions can be used instead of "as.logical"
+```
+
