@@ -9,7 +9,225 @@ library(janitor)
 
 ### Cleaning Data
 
+First 4 lines are "meta-data" -- data about data
+
 ```{r}
-video_games <- read_csv("../steam-200k-sample.csv")
+video_games <- read_csv("../steam-200k-sample.csv", skip = 4) # skips the first 4 lines OF INPUT - this is if an excel file has rubbish lines at the top that we dont want to use
+```
+
+
+
+```{r}
+video_games <- read_csv("../steam-200k-sample.csv", 
+                        skip = 4,
+                        col_types = cols("bought online" = col_logical())) # this changes this column to logical true or flase rather than 1s and zeros
+video_games
+```
+
+
+
+```{r}
+#read_csv("../steam-200k-sample.csv", skip = 4) %>%
+# mutate(`bought online` = as.logical(`bought online`)) # need back ticks! its the key above tab for this code to work
+
+# PROBABLY BETTER OFF USING THE ABOVE CODE CHUCK THIS SEEMS CLUNKY
+```
+
+```{r}
+names(video_games)
+```
+
+
+```{r}
+
+video_games_janitor_clean <- video_games %>% 
+  clean_names() # this passes the data through to the clean names function which adds underscores into column names and clears out upper case etc
+
+video_games_janitor_clean
+names(video_games_janitor_clean) # this scan then be seen by calling the names function which gives us the new column names
+
+```
+
+
+
+```{r}
+video_games_janitor_clean %>% 
+  rename("game_title" = "game_name",
+         "activity" = "what",
+         "playing_hours" = "value")
+```
+
+```{r}
+
+```
+
+
+
+## Session 2 --- Missing Values
+
+Missing values are not the same as NULL values
+
+```{r}
+library(CodeClanData)
+comms_data
+```
+
+MNAR 
+
+Fine
+Analysis can accomodate this
+
+MAR
+
+Maybe ok
+Means the missing data is related to another external variable
+
+MNAR
+
+Bad news
+This means the data is missing due to underlying pattern within the same variable
+
+
+Missing values - eg place of birth may be unknown - this is differnet from an NA
+
+NA affects all functions tried to perform actions on it 
+
+
+```{r}
+NA - explicitly code missingness
+NAN - eg 0/0 not a number
+Inf - eg 1/0 infinte value
+-Inf - eg -1/0 minus infinite
+"unknown" - character representation, eg refusal to answer a question
+NULL - complete lack of a value
+
+```
+
+
+
+```{r}
+comms_data %>% 
+  drop_na() # this drops all data - risks losing a lot of data!!!
+```
+
+### Imputation
+
+this involves replacing NA values with something sensible
+
+maybe the mean? the median? the range
+
+```{r}
+
+comms_data %>% 
+  pull(monthly_charges) %>% # this pulls the column we want to work with
+  mean(na.rm = TRUE) # this calculates the median
+
+comms_data %>% 
+  pull(monthly_charges) %>% # this pulls the column we want to work with
+  median(na.rm = TRUE)
+
+comms_data %>% 
+  pull(monthly_charges) %>% 
+  range(na.rm = TRUE) # this returns the min and max
+
+min_charge <- comms_data %>% 
+  pull(monthly_charges) %>% 
+  min(na.rm = TRUE)
+
+max_charge <- comms_data %>% 
+  pull(monthly_charges) %>% 
+  max(na.rm = TRUE)
+
+
+
+
+
+max_charge - min_charge # this is called the range of the data
+
+summary(comms_data) # this shows these values too
+
+```
+
+### Leave the NAs alone? This might be ok tho it may cause problems
+
+
+```{r}
+is.na(NA)
+
+is.na(NULL)
+
+is.na(NaN)
+
+is.na(Inf)
+
+is.na("unknown")
+```
+
+```{r}
+comms_data
+```
+
+### standard missing values
+
+```{r}
+comms_data %>% 
+  filter(is.na(monthly_charges)) # filter for the NA values
+```
+
+```{r}
+comms_data %>% 
+  summarize(count = sum(is.na(monthly_charges)),# counts the NA values for a column
+            mean = mean(is.na(monthly_charges))) # this gives the percentage of NA values
+```
+
+## Imputation
+coalesce (thing to fix, thing to fix with)
+
+
+
+```{r}
+comms_data %>%
+  mutate(monthly_charges_median = coalesce(monthly_charges, median(monthly_charges, na.rm = TRUE)),
+         monthly_charges_mean = coalesce(monthly_charges, mean(monthly_charges, na.rm = TRUE)),
+         .after = monthly_charges) # this inserts the mean and median into new columns 
+  
+  
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+comms_data_imputed_values <- comms_data %>%
+    mutate(monthly_charges2 = coalesce(monthly_charges, mean(monthly_charges, na.rm = TRUE)))
+  
+  
+```
+
+
+```{r}
+
+comms_data <- clean_names(comms_data) # this cleans the names of the columns
+
+comms_data_imputed_values <- comms_data %>% 
+  mutate(monthly_charges2 = coalesce(monthly_charges,
+                                     median(monthly_charges, na.rm = TRUE)), # creates a column called monthly_charge2. The NA values have been replaced with the median of the column
+         monthly_charges3 = coalesce(monthly_charges,
+                                     mean(monthly_charges, na.rm = TRUE)), # creates a column called monthly_charges3. The NA values from monthly_charges have been replaced with the mean of the column
+         
+         .after = monthly_charges) # this puts the columns after monthly charges for ease of viewing
+
+comms_data_imputed_values
+```
+
+```{r}
+ggplot(comms_data_imputed_values, aes(customer_id, monthly_charges2)) + 
+  geom_point()
+
+ggplot(comms_data_imputed_values, aes(customer_id, monthly_charges3)) + 
+  geom_point()
 ```
 
