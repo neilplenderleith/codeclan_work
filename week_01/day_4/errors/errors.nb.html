@@ -1770,77 +1770,57 @@ pre code {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5cbmBgYCJ9 -->
-<pre class="r"><code>library(tidyverse)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGhlX25hbWVfb2ZfbXlfdmFyaWFibGUgPC0gYygzLCA0LCA1KVxuXG50aGVfbmFtZV9vZl9teV92YXJhaWJsZSA9PSA0IFxuYGBgIn0= -->
+<pre class="r"><code>the_name_of_my_variable &lt;- c(3, 4, 5)
+
+the_name_of_my_varaible == 4 </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IG9iamVjdCAndGhlX25hbWVfb2ZfbXlfdmFyYWlibGUnIG5vdCBmb3VuZFxuIn0= -->
+<pre><code>Error: object &#39;the_name_of_my_varaible&#39; not found</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVlbigxLDIsMylcblxuYGBgIn0= -->
+<pre class="r"><code>meen(1,2,3)
 </code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gbWVlbigxLCAyLCAzKSA6IGNvdWxkIG5vdCBmaW5kIGZ1bmN0aW9uIFwibWVlblwiXG4ifQ== -->
+<pre><code>Error in meen(1, 2, 3) : could not find function &quot;meen&quot;</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Ctrl - I helps with alignment</p>
-<!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBcIkxldFwicyB3cml0ZSBjb2RlIHdpdGggYSBcXFwicXVvdGVcIlwiIFxuYGBgIn0= -->
-<pre class="r"><code># &quot;Let&quot;s write code with a \&quot;quote&quot;&quot; </code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSA9IDVcbmBgYCJ9 -->
+<pre class="r"><code>a = 5</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5hbW91bnRfc3BlbnQgPC0gYyg5LjEsOC41NSwxNC4zMiwxNC4xNywxNC4zNCw3Ljk3LDkuNzksMTEuNDcsMTIuNDQpXG5cbnNwZW5kaW5nX2NhdGVnb3J5IDwtIGMoXCJMdW5jaFwiLCBcIkRpbm5lclwiLCBcIkx1bmNoXCIsIFwiTHVuY2hcIiwgXCJDaW5lbWFcIiwgXCJEcmlua3NcIixcbiAgICAgICAgICAgICAgICAgICAgICAgXCJMdW5jaFwiLCBcIkx1bmNoXCIsIFwiRGlubmVyXCIpXG5cbm15X3dlZWtfb2Zfc3BlbmRpbmcgPC0gdGliYmxlKGFtb3VudF9zcGVudCwgc3BlbmRpbmdfY2F0ZWdvcnkgPSBjYXRlZ29yeSlcblxubXlfd2Vla19vZl9zcGVuZGluZyAlPiUgXG4gIHN1bW1hcmlzZShzdW0oYW1vdW50X3NwZW50KSlcblxuc3VtbWFyaXNlKGZpbHRlcihteV93ZWVrX29mX3NwZW5kaW5nLCBzcGVuZGluZ19jYXRlZ29yeSA9PSBcIkx1bmNoXCIpLCBcbiAgICAgICAgICBzdW0oYW1vdW50X3NwZW50KVxuKVxuYGBgIn0= -->
-<pre class="r"><code>
-amount_spent &lt;- c(9.1,8.55,14.32,14.17,14.34,7.97,9.79,11.47,12.44)
-
-spending_category &lt;- c(&quot;Lunch&quot;, &quot;Dinner&quot;, &quot;Lunch&quot;, &quot;Lunch&quot;, &quot;Cinema&quot;, &quot;Drinks&quot;,
-                       &quot;Lunch&quot;, &quot;Lunch&quot;, &quot;Dinner&quot;)
-
-my_week_of_spending &lt;- tibble(amount_spent, spending_category = category)
-
-my_week_of_spending %&gt;% 
-  summarise(sum(amount_spent))
-
-summarise(filter(my_week_of_spending, spending_category == &quot;Lunch&quot;), 
-          sum(amount_spent)
-)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYiA9IDZcbmBgYCJ9 -->
+<pre class="r"><code>b = 6</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShzdHlsZXIpICMgaGFuZHkgdG9vbCB0byB0aWR5IHVwIGNvZGUgLSBhZGRpbiBtZW51IGFib3ZlIHRoZW4gc3R5bGUgc2VsZWN0aW9uXG5cbkFtb3VudFNwZW50IDwtIGMoOS4xLCA4LjU1LCAxNC4zMiwgMTQuMTcsIDE0LjM0LCA3Ljk3LCA5Ljc5LCAxMS40NywgMTIuNDQpXG5DYXRlZ29yeSA8LSBjKFxuICBcIkx1bmNoXCIsXG4gIFwiRGlubmVyXCIsXG4gIFwiTHVuY2hcIixcbiAgXCJMdW5jaFwiLFxuICBcIkNpbmVtYVwiLFxuICBcIkRyaW5rc1wiLFxuICBcIkx1bmNoXCIsXG4gIFwiTHVuY2hcIixcbiAgXCJEaW5uZXJcIlxuKVxubXkud2Vlay5vZi5zcGVuZGluZyA8LSB0aWJibGUoQW1vdW50U3BlbnQgPSBBbW91bnRTcGVudCwgU3BlbmRpbmdDYXRlZ29yeSA9IENhdGVnb3J5KVxuc3RyKG15LndlZWsub2Yuc3BlbmRpbmcpXG5WaWV3KG15LndlZWsub2Yuc3BlbmRpbmcpXG5teS53ZWVrLm9mLnNwZW5kaW5nXG5zdW1tYXJpc2UobXkud2Vlay5vZi5zcGVuZGluZywgc3VtKEFtb3VudFNwZW50KSlcbnN1bW1hcmlzZShmaWx0ZXIobXkud2Vlay5vZi5zcGVuZGluZywgU3BlbmRpbmdDYXRlZ29yeSA9PSBcIkx1bmNoXCIpLCBzdW0oQW1vdW50U3BlbnQpKVxuYGBgIn0= -->
-<pre class="r"><code>library(styler) # handy tool to tidy up code - addin menu above then style selection
-
-AmountSpent &lt;- c(9.1, 8.55, 14.32, 14.17, 14.34, 7.97, 9.79, 11.47, 12.44)
-Category &lt;- c(
-  &quot;Lunch&quot;,
-  &quot;Dinner&quot;,
-  &quot;Lunch&quot;,
-  &quot;Lunch&quot;,
-  &quot;Cinema&quot;,
-  &quot;Drinks&quot;,
-  &quot;Lunch&quot;,
-  &quot;Lunch&quot;,
-  &quot;Dinner&quot;
-)
-my.week.of.spending &lt;- tibble(AmountSpent = AmountSpent, SpendingCategory = Category)
-str(my.week.of.spending)
-View(my.week.of.spending)
-my.week.of.spending
-summarise(my.week.of.spending, sum(AmountSpent))
-summarise(filter(my.week.of.spending, SpendingCategory == &quot;Lunch&quot;), sum(AmountSpent))</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSA9IGEgKyBiXG5gYGAifQ== -->
+<pre class="r"><code>a = a + b</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShza2ltcilcbnNraW0obXRjYXJzKSBcbmBgYCJ9 -->
-<pre class="r"><code>library(skimr)
-skim(mtcars) </code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYVxuYGBgIn0= -->
+<pre class="r"><code>a</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>Be wary that code chunks are written in correct order</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCmxpYnJhcnkodGlkeXZlcnNlKQ0KDQpgYGANCg0KQ3RybCAtIEkgIGhlbHBzIHdpdGggYWxpZ25tZW50DQoNCmBgYHtyfQ0KIyAiTGV0InMgd3JpdGUgY29kZSB3aXRoIGEgXCJxdW90ZSIiIA0KYGBgDQoNCmBgYHtyfQ0KDQphbW91bnRfc3BlbnQgPC0gYyg5LjEsOC41NSwxNC4zMiwxNC4xNywxNC4zNCw3Ljk3LDkuNzksMTEuNDcsMTIuNDQpDQoNCnNwZW5kaW5nX2NhdGVnb3J5IDwtIGMoIkx1bmNoIiwgIkRpbm5lciIsICJMdW5jaCIsICJMdW5jaCIsICJDaW5lbWEiLCAiRHJpbmtzIiwNCiAgICAgICAgICAgICAgICAgICAgICAgIkx1bmNoIiwgIkx1bmNoIiwgIkRpbm5lciIpDQoNCm15X3dlZWtfb2Zfc3BlbmRpbmcgPC0gdGliYmxlKGFtb3VudF9zcGVudCwgc3BlbmRpbmdfY2F0ZWdvcnkgPSBjYXRlZ29yeSkNCg0KbXlfd2Vla19vZl9zcGVuZGluZyAlPiUgDQogIHN1bW1hcmlzZShzdW0oYW1vdW50X3NwZW50KSkNCg0Kc3VtbWFyaXNlKGZpbHRlcihteV93ZWVrX29mX3NwZW5kaW5nLCBzcGVuZGluZ19jYXRlZ29yeSA9PSAiTHVuY2giKSwgDQogICAgICAgICAgc3VtKGFtb3VudF9zcGVudCkNCikNCmBgYA0KDQpgYGB7cn0NCmxpYnJhcnkoc3R5bGVyKSAjIGhhbmR5IHRvb2wgdG8gdGlkeSB1cCBjb2RlIC0gYWRkaW4gbWVudSBhYm92ZSB0aGVuIHN0eWxlIHNlbGVjdGlvbg0KDQpBbW91bnRTcGVudCA8LSBjKDkuMSwgOC41NSwgMTQuMzIsIDE0LjE3LCAxNC4zNCwgNy45NywgOS43OSwgMTEuNDcsIDEyLjQ0KQ0KQ2F0ZWdvcnkgPC0gYygNCiAgIkx1bmNoIiwNCiAgIkRpbm5lciIsDQogICJMdW5jaCIsDQogICJMdW5jaCIsDQogICJDaW5lbWEiLA0KICAiRHJpbmtzIiwNCiAgIkx1bmNoIiwNCiAgIkx1bmNoIiwNCiAgIkRpbm5lciINCikNCm15LndlZWsub2Yuc3BlbmRpbmcgPC0gdGliYmxlKEFtb3VudFNwZW50ID0gQW1vdW50U3BlbnQsIFNwZW5kaW5nQ2F0ZWdvcnkgPSBDYXRlZ29yeSkNCnN0cihteS53ZWVrLm9mLnNwZW5kaW5nKQ0KVmlldyhteS53ZWVrLm9mLnNwZW5kaW5nKQ0KbXkud2Vlay5vZi5zcGVuZGluZw0Kc3VtbWFyaXNlKG15LndlZWsub2Yuc3BlbmRpbmcsIHN1bShBbW91bnRTcGVudCkpDQpzdW1tYXJpc2UoZmlsdGVyKG15LndlZWsub2Yuc3BlbmRpbmcsIFNwZW5kaW5nQ2F0ZWdvcnkgPT0gIkx1bmNoIiksIHN1bShBbW91bnRTcGVudCkpDQpgYGANCg0KYGBge3J9DQpsaWJyYXJ5KHNraW1yKQ0Kc2tpbShtdGNhcnMpIA0KYGBgDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCnRoZV9uYW1lX29mX215X3ZhcmlhYmxlIDwtIGMoMywgNCwgNSkNCg0KdGhlX25hbWVfb2ZfbXlfdmFyYWlibGUgPT0gNCANCg0KIyB0eXBvcyBjYXVzZSBlcnJvcnMsIHVzZSBhdXRvY29ycmVjdCBwb3B1cA0KIyB1c2Ugc21hbGxlciB2YXJpYWJsZSBuYW1lcw0KYGBgDQoNCmBgYHtyfQ0KDQpsaWJyYXJ5KGZjdWspDQoNCm1lZW4oMSwyLDMpDQoNCmBgYA0KYGBge3J9DQphID0gNQ0KYGBgDQoNCmBgYHtyfQ0KYiA9IDYNCmBgYA0KDQpgYGB7cn0NCmEgPSBhICsgYg0KYGBgDQoNCmBgYHtyfQ0KYQ0KYGBgDQoNCkJlIHdhcnkgdGhhdCBjb2RlIGNodW5rcyBhcmUgd3JpdHRlbiBpbiBjb3JyZWN0IG9yZGVy</div>
 
 
 
@@ -1887,7 +1867,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("coding_best_practice.Rmd");
+  window.initializeSourceEmbed("errors.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

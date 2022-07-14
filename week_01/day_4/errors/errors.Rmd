@@ -1,0 +1,38 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+the_name_of_my_variable <- c(3, 4, 5)
+
+the_name_of_my_varaible == 4 
+
+# typos cause errors, use autocorrect popup
+# use smaller variable names
+```
+
+```{r}
+
+library(fcuk)
+
+meen(1,2,3)
+
+```
+```{r}
+a = 5
+```
+
+```{r}
+b = 6
+```
+
+```{r}
+a = a + b
+```
+
+```{r}
+a
+```
+
+Be wary that code chunks are written in correct order
