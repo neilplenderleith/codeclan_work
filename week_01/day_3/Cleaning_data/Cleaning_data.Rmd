@@ -41,10 +41,10 @@ names(video_games)
 ```{r}
 
 video_games_janitor_clean <- video_games %>% 
-  clean_names() # this passes the data through to the clean names function which adds underscores into column names and clears out upper case etc
+  clean_names() # this passes the data through the clean names function which adds underscores into column names and clears out upper case etc
 
 video_games_janitor_clean
-names(video_games_janitor_clean) # this scan then be seen by calling the names function which gives us the new column names
+names(video_games_janitor_clean) # this can then be seen by calling the names function which gives us the new column names
 
 ```
 
@@ -94,12 +94,12 @@ NA affects all functions tried to perform actions on it
 
 
 ```{r}
-NA - explicitly code missingness
-NAN - eg 0/0 not a number
-Inf - eg 1/0 infinte value
--Inf - eg -1/0 minus infinite
-"unknown" - character representation, eg refusal to answer a question
-NULL - complete lack of a value
+# NA - explicitly code missingness
+# NAN - eg 0/0 not a number
+# Inf - eg 1/0 infinte value
+# -Inf - eg -1/0 minus infinite
+# "unknown" - character representation, eg refusal to answer a question
+# NULL - complete lack of a value
 
 ```
 
@@ -107,7 +107,7 @@ NULL - complete lack of a value
 
 ```{r}
 comms_data %>% 
-  drop_na() # this drops all data - risks losing a lot of data!!!
+  drop_na() # this drops all data which contains an NA in its line - risks losing a lot of data!!!
 ```
 
 ### Imputation
