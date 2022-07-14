@@ -15,9 +15,9 @@ the_name_of_my_varaible == 4
 ```{r}
 
 library(fcuk)
-
+library(tidyverse)
 meen(1,2,3)
-
+# ignore this - its suppsoed to spell check function names etc - doesnt appear to be working
 ```
 ```{r}
 a = 5
@@ -36,3 +36,256 @@ a
 ```
 
 Be wary that code chunks are written in correct order
+
+
+```{r}
+
+filter(the_name_of_my_variable, variable == 4) # doesnt work there is no "variable" assigned
+
+```
+
+```{r}
+
+car <- mtcars
+
+```
+
+```{r}
+
+library(dplyr)
+library(MASS) # packages can overwrite each other functions
+# order packages are loaded in changes which functions are overwritten
+
+```
+```{r}
+
+mtcars %>% 
+  dplyr::select(mpg) # if there is a conflict in function name you can specify the package like this
+
+
+
+```
+```{r}
+conflicts() # lists the conflicts 
+```
+
+
+```{r}
+mtcars %>% 
+  dplyr::select(mpg, hp) %>% 
+  filter(mpg < 50) %>% 
+  summarise(mean = mean(hp))
+
+# just playing about looking at error messages here  please ignore
+
+```
+
+Advantage of using pipes is we can run code line by line to see what works and what doesnt
+
+```{r}
+
+
+library(errorist) # automaticall copy and paste error messages into web browser
+# not really much use
+```
+```{r}
+
+CodeClanData::students %>% 
+  group_by(favorite_school_subject, school_year) %>% 
+  summarise(height_cm)
+
+# just error checking playaround
+```
+
+```{r}
+library(janitor)
+
+mtcars$mpg == mtcars$mpg
+
+```
+```{r}
+
+
+```
+
+
+### MINI LAB -------------------------------------------------------------------
+
+
+
+# Error 1.
+
+Create some_letters which is a character vector containing the following letters: “E”, “R”, “R”, “O” and “R”.
+
+some_letters <- ("E", "R", "R", "O", "R)
+
+
+```{r}
+some_letters <- c("E", "R", "R", "O", "R")
+# missing a " after "R
+# missing a c before the bracket
+```
+
+# Error 2.
+
+Create message which is a vector containing the following strings: “does”, “this”, “work” and “?”, then convert the vector to uppercase using toupper.
+
+message <- c("does", "this" "work", "?")
+
+toupper(messege)
+
+```{r}
+message <- c("does", "this", "work", "?")
+
+toupper(message)
+# typo in message, missing comma after "this"
+```
+# Error 3.
+
+Select columns mpg, cyl, and disp from mtcars and keep only rows where mpg is less than 20.
+
+mtcars %>% 
+  select(mpg, cyl, disp) %>>%
+  filter(mpg < 20)
+  
+```{r}
+mtcars %>% 
+  dplyr::select(mpg, cyl, disp) %>%
+  filter(mpg < 20)
+# was trying to use the wrong "select" function!!! AHHHH! unload MASS package
+# also double > sign in the pipe operator
+```
+  
+# Error 4. 
+ 
+  Select columns Sepal.Length, Sepal.Width, and Species and arrange by Sepal Length.
+  
+  iris %>% 
+  select(Sepal.Width, Species) %>% 
+  arrange(Sepal.Length)
+  
+```{r}
+iris %>% 
+  dplyr::select(Sepal.Width, Sepal.Length, Species) %>% 
+  arrange(Sepal.Length)
+# missing Sepal Length in the select function
+```
+  
+# Error 5.
+
+Find the average tooth length for where the supplement is vitamin C.
+  
+  ToothGrowth %>%
+  summarise(avg_len_vc = mean(len)) %>% 
+  filter(supp == "VC")
+  
+```{r}
+ToothGrowth %>%
+  filter(supp == "VC") %>% 
+  summarise(avg_len_vc = mean(len)) 
+  
+# filter and summarise were the wrong way round
+
+```
+  
+# Error 6. 
+Create a vector of animals (cat, dog, rabbit, horse), then use the sample function to get 10 random animals from those categories.
+  
+  animals <- c("cat", dog, "rabbit", "horse")
+  sample(animals, 10)
+  
+```{r}
+
+animals <- c("cat", "dog", "rabbit", "horse")
+  sample(animals, 10, replace = TRUE)
+
+# missing "" in dog in the list
+  # also the sample function needed the replace = true as the sample size 
+  # wanted is bigger than the vector
+```
+  
+# Error 7.
+
+Create dog_names and cat_names, then use intersect to check which common pet names are shared by both dogs and cats.
+
+dog_names <- c("Lucy", "Molly", "Charlie", "Luna", "Bella", "Cooper")
+
+cat_names < c("Luna", "Lily", "Lucy", "Charlie", "Max", "Oliver")
+Intersect(dog_names)
+
+```{r}
+
+dog_names <- c("Lucy", "Molly", "Charlie", "Luna", "Bella", "Cooper")
+
+cat_names <- c("Luna", "Lily", "Lucy", "Charlie", "Max", "Oliver")
+
+intersect(dog_names, cat_names)
+# assignment operator had a typo
+# intersect had a capital letter which took me ages to notice
+```
+
+# Error 8. 
+Filter weights equal to or below 150 grams, then create a new column ‘weight_kg’ that contains the weight in kilograms.
+
+chickwts %>% 
+  filter(weight =< 150) %>% 
+  mutate(weight_kg == weight * 0.001)
+  
+```{r}
+chickwts %>% 
+  filter(weight <= 150) %>% 
+ mutate(weight_kg = weight * 0.001)
+# =< instead of <=
+# needed single = rather than == 
+```
+  
+# Error 9. 
+Create a tibble with column alphabet which contains the English alphabet and column numbers which has a unique number for each letter. Then remove rows where the letter is A, B or C.
+
+tibble(alphabet = LETTERS(),
+       numbers = 1:25) %>% 
+  filter(letter != c(A, B, C))
+  
+```{r}
+
+tibble(alphabet = LETTERS,
+       numbers = 1:26) %>% 
+  filter(!alphabet %in% (c("A", "B", "C"))) 
+# number to 26 not 25
+# no brackets after LETTERS
+# ABC needed "" 
+# "alphabet" not "letters" which doesn't exist as a variable
+
+```
+  
+  
+# Error 10.
+
+  Clean the variable names and drop missing ratings from scent_ratings and calculate an average rating per scent.
+  
+  # following is data for the below
+```{r}
+
+set.seed(999)
+
+scent_ratings <- tibble(
+  iD = rep(1:10, each = 5),
+  SCENT = rep(c("New book", "Cut grass", "Rose oil", "Fresh linen", "Wet dog"), 10),
+  rating = sample(c(0:5, NA), 50, replace = TRUE),
+  PersonAge = rep(NA, 50)
+)
+```
+  
+```{r}
+scent_ratings %>% 
+  janitor::clean_names() %>% 
+  drop_na(1:3) %>% 
+  group_by(scent) %>% 
+  summarise(mean_rating = mean(rating))
+
+# needed two colons after janitor
+# cant drop all columns as one was wholly NAs so just dropped NAs from the 1st three columns
+# mean at the end needed rating entered as an argument
+```
+  
+  

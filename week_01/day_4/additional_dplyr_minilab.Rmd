@@ -1,0 +1,145 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Question 1.
+
+Read in the data and investigate it, e.g. variables, variable types, dimensions etc.
+
+```{r}
+library(tidyverse)
+wines <- read.csv("wine_ratings.csv")
+```
+
+```{r}
+skimr::skim(wines)
+glimpse(wines)
+```
+
+
+# Question 2.
+
+Select columns title, taster_name, points, price, and country, then drop all NAs. Save into a variable called wine_subset. Use this variable for all subsequent tasks.
+
+
+```{r}
+winesna <- wines %>% 
+  select(title, taster_name, points, price, country) %>% 
+  drop_na()
+
+
+```
+
+# Question 3.
+
+Find the 5 countries with the highest mean points.
+
+```{r}
+winesna %>% 
+  select(country, points) %>% 
+group_by(country) %>% 
+summarise(country_mean = mean(points)) %>% 
+slice_max(n = 5, country_mean)
+
+winesna %>% 
+  select(country, points) %>% 
+group_by(country) %>% 
+summarise(country_median = median(points)) %>% 
+slice_max(n = 5, country_median)
+```
+
+
+
+
+# Question 4.
+
+Find the 5 countries with the lowest mean prices.
+
+```{r}
+
+winesna %>% 
+  select(country, price) %>% 
+group_by(country) %>% 
+summarise(price_mean = mean(price)) %>% 
+slice_min(n = 5, price_mean)
+
+winesna %>% 
+  select(country, price) %>% 
+  group_by(country) %>% 
+  summarise(price_median = median(price)) %>% 
+  slice_min(n = 5, price_median)
+```
+
+
+
+
+#Question 5.
+
+Does the result differ if you use the median instead of the mean for Questions 3 and 4?
+
+Answered above - it does seem to make a difference. the median returns either whole number or a ".5" whereas the mean returns a number with 4 decimal places so there is more scope for countries to have the same medians hence more rows are returned as ties are counted
+
+
+
+#Question 6.
+
+Find the names of all the tasters using distinct. Then take a random sample of 5 names using sample_n. Save these 5 names into a new variable called taster_sample which should be a character vector containing only the names.
+
+```{r}
+
+
+taster_sample <- winesna %>% 
+  distinct(taster_name) %>% 
+  slice_sample(n=5) %>% 
+  pull()
+taster_sample
+
+```
+
+
+
+#Question 7
+
+Do the same thing for country, i.e. create a character vector called country_sample using distinct and pull, but this time use sample_frac to pick 10 countries at random.
+
+
+```{r}
+country_sample <- winesna %>% 
+  distinct(country) %>% 
+  slice_sample(n=10) %>% 
+  pull()
+
+country_sample
+```
+
+
+
+#Question 8
+
+Filter the rows of wine_subset so you are left only with data from the 5 tasters in your taster_sample and from the countries in your country_sample. Save this into a new variable called wine_sample.
+
+```{r}
+wine_sample <- winesna %>% 
+  filter(taster_name %in% taster_sample & country %in% country_sample)
+
+wine_sample
+```
+
+
+#Question 9
+
+Using your wine_sample, create a new column difference_from_avg which contains the difference between each wine’s rating (points) and the average rating for that taster, then arrange the differences to see the highest positive difference first. [Hint: you will first have to calculate the average points for each taster]
+
+```{r}
+
+wine_sample %>% 
+group_by(taster_name) %>% 
+mutate(taster_mean_points = mean(points), difference_from_avg = points - taster_mean_points) %>% 
+arrange(desc(difference_from_avg))
+
+  
+
+
+```
+
