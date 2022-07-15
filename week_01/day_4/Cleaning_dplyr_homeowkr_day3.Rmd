@@ -8,7 +8,7 @@ output: html_notebook
 ```{r}
 library(tidyverse)
 library(janitor)
-movies <- read.csv("../data/movies.csv")
+movies <- read.csv("errors/../data/movies.csv")
 ```
 
 
