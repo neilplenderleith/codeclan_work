@@ -1,0 +1,170 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Joins
+
+4 mutating join verbs:
+* inner_join() : returns all rows from two tables with matching records.
+* left_join() : returns all records in left table, and any matching records in another.
+* right_join() : returns all records in right table, and any matching records in another.
+* full_join() : returns all records in both tables, matching where possible.
+
+2 filtering join verbs:
+* semi_join() : returns only rows from the first table where one or more matches are found in the second table. Unique only
+* anti_join() : returns only rows from the first table where no matches are found in the second table, unique only
+
+2 binding verbs:
+* bind_rows() : add rows to a table
+* bind_cols() : add columns to a table
+
+
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+
+customers <- tibble(
+  customer_ID = c(001, 002, 004, 005, 008, 010), 
+  name = c("John Smith", "Jane Adams", "Robert Landry", "Jane Tow", "Raul Tann", "Hilary Joyal"),
+  email_address = c("johnsmith@gmail.com", "janea@gmail.com", "rlabdry@hotmail.com", "janet89@aol.com", "paul.tann1@gmail.com", NA),
+  shipping_address = c("32 Station Road, Edinburgh", "42 Park Drive, Edinburgh", NA, "10 Gardiner Rd, Edinburgh", "12 Main St, Edinburgh", " 234 Queensferry Rd, Edinburgh,")
+)
+
+customers
+```
+
+```{r}
+orders <- tibble(
+  customer_ID = c(001, 002, 005, 010, 012, 001), 
+  order_number = c("KU65781", "SU98201", "JS76821", "YR28212", "JS91221","YR21873"),
+  order_total = c("£32.50", "£56.00", "£100.02", "£20.25", "£39.50", "£45.00"),
+  product_code = c("XZY780", "XYZ123", "XYZ256", "XYZ262", "XYZ345", "XYZ127")
+)
+
+orders 
+```
+
+# Trying joins
+
+```{r}
+
+# general syntax:
+# join(datax, datay, c(keyx, keyy))
+
+```
+
+```{r}
+
+inner_join(customers, orders, "customer_ID")
+# returns all rows from two tables with matching records.
+```
+
+```{r}
+
+# possibly the more popular function to use
+
+left_join(customers, orders, "customer_ID")
+
+#includes all values from the left table, matching recrods from the right table
+```
+
+```{r}
+
+right_join(customers, orders, "customer_ID")
+
+# all values from the right table, only matching records from the left
+```
+
+```{r} 
+
+full_join(customers, orders, "customer_ID")
+
+```
+
+# Join with multiple values
+```{r}
+# arbitrarily rename our customer_ID column for the customer data
+customers_adj <- rename(customers, ID = customer_ID)
+
+# now let's join that 
+inner_join(customers_adj , orders, by = c("ID" = "customer_ID"))
+# order of arguments after "by =" matters here - same order as tables
+```
+
+
+```{r}
+
+customers2 <- customers %>% 
+  mutate(payment_type = c("card", "cash", "cash", "card", "card", "card"))
+
+orders2 <- orders %>% 
+  mutate(payment_type = c("card", "cash", "cash", "card", "card", "card"))
+
+
+```
+
+
+```{r}
+inner_join(customers2, orders2, by = c("customer_ID", "payment_type"))
+```
+
+# Filtering Joins
+
+```{r}
+
+semi_join(customers, orders, "customer_ID")
+
+# returns only rows from the first table where one or more matches are found in the second table. Unique only
+```
+
+```{r}
+
+anti_join(customers, orders, "customer_ID")
+
+# returns only rows from the first table where no matches are found in the second table, unique only
+```
+
+
+# Binding Joins
+
+
+```{r}
+statuses <- tibble(
+  status = c("active", "active", "inactive", "inactive", "active", "inactive")
+) 
+```
+
+```{r}
+
+bind_cols(customers, statuses)
+# bind a column onto the end of dataframe
+# not used too much
+```
+
+```{r}
+
+past_customers <- tibble(
+  customer_ID = c(020, 021), 
+  name = c("Dave Brown", "Jess Bishop"),
+  email_address = c("dbrown@hotmail.com", "jessb@gmail.com"),
+  shipping_address = c("57 Park View, Leith", "12 Reid Way, Broxburn")
+)
+
+past_customers
+
+```
+
+```{r}
+
+bind_rows(customers, past_customers)
+
+# adds rows onto the bottom of a tibble/dataframe
+# column names need to be the same or it will make new columns
+
+```
+

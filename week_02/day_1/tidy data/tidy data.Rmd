@@ -1,0 +1,143 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(CodeClanData)
+```
+
+```{r}
+subject_hr <- tibble( name = c("SUBJ01","SUBJ02","SUBJ03"), 
+  hr_am = c(68,72,68), 
+  hr_pm = c(58,89,52))
+
+subject_hr
+
+
+
+```
+
+```{r}
+
+subject_hr %>% 
+  pivot_longer(cols = starts_with(("hr")),
+               names_to = "measurements_of_time",
+               values_to = "heartrate")
+
+
+```
+
+income <- tibble(religion = c("Agnostic","Atheist","Buddhist", "Catholic"), 
+  X10k = c(12,25,3,75), 
+  X10k_to_20k = c(34,14,6,60),
+  X20k_to_30k = c(45,22,10,110))
+
+income
+
+```{r}
+income <- tibble(religion = c("Agnostic","Atheist","Buddhist", "Catholic"), 
+  X10k = c(12,25,3,75), 
+  X10k_to_20k = c(34,14,6,60),
+  X20k_to_30k = c(45,22,10,110))
+
+income
+```
+
+```{r}
+income %>%  
+    pivot_longer(cols = starts_with(("X")),
+               names_to = "sections_of_income",
+               values_to = "count_of_section")
+
+```
+
+
+
+3:45
+What makes the table untidy?
+How could you tidy it? (You don’t need to know how to write the code, you just need to have an idea of you would tidy them up)
+
+
+
+```{r}
+
+messy_orders <- tibble( name = c("Joe Bloggs","Jane Smith","Penny Jones"), 
+  order_info = c("XY7282/29-06-19","LO0182/15-03-19","AS6812/04-06-19"), 
+  order_amount = c(58.00,125.00,75.25))
+
+messy_orders
+
+```
+```{r}
+
+tidy_orders <- messy_orders %>% 
+  separate(order_info, 
+           into = c("order_number", "date"),
+           sep = "/")
+tidy_orders
+```
+
+```{r}
+hospital_visits <- read_csv("../data/hospitals93to98.csv")
+hospital_visits
+```
+
+```{r}
+hospital_visits_long <- hospital_visits %>% 
+  pivot_longer(cols = starts_with("FY"),
+                names_to = "year",
+               values_to = "visit_number",
+               names_prefix = "FY") # this strips the FY from these years values
+```
+
+```{r}
+
+tidy_hospital <- hospital_visits_long %>% 
+  pivot_wider(names_from = Field,
+              values_from = visit_number) %>% 
+  separate(IcdChapter, c("code", "description"), sep = "\\. ") # need the 2 \\ as . is a special character
+
+tidy_hospital
+```
+
+```{r}
+tidy_hospital %>% 
+  unite(disease, c("code", "description"), sep = ":")
+
+```
+
+### Mini Lab
+
+Task 1.
+Load in the country_data.csv file and take a look at it. What needs changed in this to make it tidy? Which columns need made into long format, and which need spread to rows?
+
+Task 2.
+Do the appropriate pivoting of your columns using R
+
+Task 3.
+Separate the country variable so you have the name in one column and the number in another.
+
+Task 4.
+Unite the code_letter and code_numb variables so that they are both in one column, with no spaces separating them.
+
+```{r}
+
+country_data <- read_csv("../data/country_data.csv")
+
+country_longer <- country_data %>% 
+  pivot_longer(cols = starts_with("Y"),
+               names_to = "year", 
+               values_to = "number_of_people",
+               names_prefix = "Y")
+
+country_longer %>% 
+  pivot_wider(names_from = "type",
+               values_from = "number_of_people") %>% 
+  separate(country, c("code", "country"), sep = "\\. ") %>% 
+  unite(col = "code_number", c("code_letter", "code_numb"), sep = ":")
+```
+
+
+

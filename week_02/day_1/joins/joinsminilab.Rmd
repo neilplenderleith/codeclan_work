@@ -1,0 +1,77 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+
+actors <- read_csv("../data/actors.csv")
+movies <- read_csv("../data/movies.csv")
+roles <- read_csv("../data/roles.csv")
+
+actors
+movies
+roles
+
+```
+
+```{r}
+
+movies %>% 
+  filter(id == "192017")
+
+```
+```{r}
+
+mermaid_roles <- roles %>% 
+  filter(movie_id == 192017)
+
+mermaid_roles
+```
+
+```{r}
+
+# left_join(actors, mermaid_roles, by = c("id", "actor_id"))
+
+# left_join(actors, mermaid_roles, by = c("id" = "actor_id"))
+
+left_join(mermaid_roles, actors, by = c("actor_id" = "id"))
+
+```
+
+```{r}
+
+inner_join(mermaid_roles, actors, by = c("actor_id" = "id"))
+
+```
+
+
+```{r}
+
+actors_more_than_once <- actors %>% 
+  filter(film_count >= 2)
+
+```
+
+```{r}
+
+  actors2 <- left_join(actors_more_than_once, roles,  by = c("id" = "actor_id"))
+actors2
+```
+
+```{r}
+
+left_join(actors2, movies, by = c("movie_id" = "id")) %>% 
+  mutate(rank = as.numeric(rank)) %>% 
+  group_by(first_name, last_name) %>% 
+  summarise(avg_rank = mean(rank, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  slice_max(avg_rank, n = 5)
+
+```
+
