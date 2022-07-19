@@ -1,0 +1,128 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(stringr)
+```
+
+1 MVP
+Question 1.
+Are the Thought Police ever mentioned?
+
+```{r}
+whole_text %>% 
+  str_detect("Thought Police")
+
+# Yes
+```
+
+Question 2.
+Count how often Big Brother is mentioned
+
+```{r}
+whole_text %>% 
+  str_count(pattern = "(?i)big brother")
+
+# 20 times?
+
+```
+
+
+Question 3.
+The chapter is written from the point of view of the protagonist, Winston. Does he ever mention the other main character (Julia) by name?
+
+```{r}
+whole_text %>% 
+  str_detect("Julia")
+
+# No never mentioned
+```
+
+Question 4.
+Winston writes the date in a specific format: month nth, year eg. August 5th, 2019. Write a regular expression to match dates in that format and find the date written in his diary.
+
+```{r}
+whole_text %>% 
+  str_extract_all("[A-Z]{1}[a-z]+ [0-9]{1,2}[a-z]{2}, [0-9]{4}")
+
+# "April 4th, 1984"
+```
+
+
+Question 5.
+Winston wants some anonymity, redact his name somehow.
+
+```{r}
+
+whole_text %>% 
+  # str_count("Winston") %>% 
+  str_replace("Winston", "REDACTED") %>% 
+  str_count("Winston")
+
+# count went from 32 to zero so think thats done it
+
+```
+Question 6.
+Stocks of Victory Gin have run out and the people of Oceania will have to drink vodka instead. Replace “gin” with “vodka”, matching case wherever possible. There’s still loads of Victory Coffee, though, so don’t replace that.
+
+```{r}
+whole_text %>% 
+  str_extract_all("(?i)[a-z]*[:punct:]*gin[:punct:]*")   # this reveals 1 Gin, 8 gins
+  
+# returns : "saggin"  "GIN."    "begin"   "origin"  "gin."    "begin"   "draggin" "imagin"  "gin"    
+# Just want to change the "GIN." , "gin." and the "gin"
+  
+whole_text %>% 
+  str_extract_all(" [:punct:]*gin") 
+  # ok by forcing a space in front of the "gin" we take out where it has been placed in a word
+# lets now do a replace
+
+no_gins_text <- whole_text %>% 
+  str_replace_all(" [:punct:]*gin", " vodka") %>% 
+  str_replace_all(" [:punct:]*GIN", " VODKA")
+
+no_gins_text %>% 
+  str_extract_all(" [:punct:]*gin")
+# the gins dont come up now
+
+no_gins_text %>% 
+  str_extract_all("(?i)[a-z]*[:punct:]*gin[:punct:]*")
+# only the right "gins are left"
+
+no_gins_text %>% 
+  str_extract_all("(?i).{2}vodka.{2}")
+
+no_gins_text %>% 
+  str_extract_all("(?i)[a-z]*[:punct:]*vodka[:punct:]*")
+
+```
+
+```{r}
+
+
+
+
+```
+
+
+
+Question 7.
+Big Brother is rebranding and has decided that the various ministries will now be known as departments. The old departments are now called sections. The Newspeak titles will use “Dep” instead of “Mini”.
+
+1.1 Hints
+Remember that you can use different functions to test your regular expressions before using them to change things.
+If you make a change and want to undo it, you can always re-run the first code block to restore the original text
+The order in which you do things will be important for some tasks!
+2 Extension
+You may have noticed some repetition in these tasks. Try to find a programmatic way of making changes using functions.
+
+```{r}
+whole_text %>% 
+  # str_extract_all("(?i).{3}department.{3}") %>% 
+  str_replace_all("Department", "Section") %>% 
+  str_extract_all("(?i).{3}department.{3}") 
+```
+

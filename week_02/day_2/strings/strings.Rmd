@@ -1,0 +1,361 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+spotify <- read_csv(("../data/spotify_sample.csv"))
+```
+
+```{r}
+
+single <- 'this is a single string'
+double <- "this is a double"
+
+single
+double
+
+```
+
+```{r}
+
+'Let's write a string # apostrophe ends quote
+
+# can use \
+
+'Lets\' write a string'
+
+# easier with
+
+"Let's write a string"
+
+```
+
+```{r}
+employees <- tibble(
+  first_name = c("Sally", "steven", "Mary", "John"),
+  last_name = c("Smith", "hasTings", "Milne", "Davidson"),
+  postcode = c("EH10 6GH", "EH3 7HL", "G1 7FR", NA), 
+  location = c(" ", "Edinburgh", "", "Stirling")
+)
+
+employees
+
+
+```
+
+```{r}
+
+employees %>% 
+  group_by(location) %>% 
+  summarise(n())
+
+# the 2 empty values are not equal
+```
+
+```{r}
+
+mary_location <- employees %>% 
+  filter(first_name == "Mary") %>% 
+  select(location) %>% 
+  pull()
+
+sally_location <- employees %>% 
+  filter(first_name == "Sally") %>% 
+  select(location) %>% 
+  pull()
+```
+
+```{r}
+mary_location == sally_location
+
+mary_location
+sally_location
+
+```
+```{r}
+employees %>% 
+  summarise(nchar(location))
+
+# returns number of characters for the location column
+```
+
+```{r}
+
+str_c("This", "is", "some", "text")
+
+# to add spaces:
+
+str_c("This", "is", "some", "text", sep = " ")
+
+
+```
+
+```{r}
+
+employees %>% 
+  mutate(full_name = str_c(first_name, last_name, sep = " "),
+         .after = last_name)
+
+```
+
+```{r}
+
+employees %>% 
+  mutate(full_name = str_c(first_name, postcode, sep = " "),
+         .after = last_name)
+
+# demonstrates NA values cause an NA
+
+```
+
+
+```{r}
+
+employees %>% 
+  mutate(full_name = paste(first_name, postcode),
+         .after = last_name)
+
+# paste function pulls over an NA into a string as "NA"
+```
+
+
+```{r}
+
+pangram <- "The quick brown fox jumps over the lazy dog"
+
+
+```
+```{r}
+pangram %>% 
+  str_to_upper()
+
+pangram %>% 
+  str_to_lower()
+```
+
+```{r}
+
+pangram %>% 
+  str_to_title()
+
+# caps the first letter fo each word
+```
+```{r}
+
+pangram %>% 
+  str_to_sentence()
+
+# changes to sentence case, cannot detect after full stops
+```
+```{r}
+employees %>% 
+  select(first_name, last_name) %>% 
+  mutate(first_name_fix = str_to_title(first_name),
+         last_name_fix = str_to_title(last_name))
+```
+
+```{r}
+
+unbroken_string <- "We're going to break up this string."
+
+```
+
+```{r}
+
+unbroken_string %>% 
+  str_split(" ") %>% 
+  flatten_chr()
+
+# double square bracket in the output means a list
+# flatten_chr then takes them out of a list
+```
+
+```{r}
+employees %>% 
+ mutate( new_postcode = str_split(postcode, " ")) %>% 
+# this creates a list which doesnt work too well use unnest
+  unnest(new_postcode)
+```
+
+```{r}
+employees %>% 
+separate_rows(postcode, sep = " ")
+
+# works better than above
+
+```
+
+```{r}
+
+employees %>% 
+  separate(postcode, c("postcode_outer", "postcode_inner"), " ")
+
+```
+
+# Task - 10 mins
+Concatenate the strings "Manipulating" "strings" "is" "fun!"
+Capitalise the result and save it in a new variable
+Split the formatted string into individual characters
+
+```{r}
+concat <- str_c("Manipulating", "strings", "is", "fun!", sep = " ")
+
+concat <- concat %>% 
+  str_to_upper()
+concat
+```
+
+```{r}
+concat %>% 
+  str_split("") %>% 
+  flatten_chr()
+  
+# use flatten_chr NOT flatten here
+```
+
+```{r}
+full_string <- "Let's grab a substring from this!"
+```
+
+```{r}
+
+full_string %>% 
+  str_sub(start = 1, end = 5)
+
+# can leave out start and end if starting at start or ending at end
+
+```
+
+```{r}
+full_string %>% 
+  str_sub(-5, -2)
+```
+```{r}
+
+employees %>% 
+  mutate(postcode_inner = str_sub(postcode, -3),
+         postcode_outer = str_sub(postcode, 1, -4))
+
+```
+
+```{r}
+
+string <- "We're going to replace some words"
+```
+
+```{r}
+str_sub(string, 1, 22) <- "I've changed"
+string
+
+# use the assignmant operator to replace the str_sub output with whatever is to the right of the assignment operator
+```
+
+```{r}
+number <- 123456.789
+```
+
+```{r}
+
+number %>% 
+  format() # changed to character vector
+
+
+```
+
+```{r}
+
+number %>% 
+  format(nsmall = 2) # changed to character vector
+# rounds to 2
+
+```
+
+```{r}
+
+number %>% 
+  format(nsmall = 1, decimal.mark = ",") # changed to character vector
+# rounds to 2
+
+```
+
+```{r}
+number %>% 
+  format(big.mark = ",", big.interval = 3)
+```
+
+```{r}
+
+spotify
+```
+
+Here are some more questions for you to practice with. Remember, the point of these questions is not to do something that makes sense for this dataset, but rather to allow you to practice using the techniques we’ve learnt today on a real dataset. When it comes to your projects, you will be in charge of deciding how to work with the strings in your dataset.
+
+We are going to use some Spotify data for this task:
+spotify_songs <- read_csv("data/spotify_sample.csv")
+
+Upcase the text in the playlist_name column. Overwrite the existing column to store the result.
+Lowcase the text in the track_artist column. Store the result in a new column called track_artist_lowcase.
+Take the first 5 characters of the playlist_id column, and save it in a new column called playlist_start.
+Take the first 4 characters of the track_album_release_date column and save it in a new column called year.
+What else can you do to this dataset to practice? Can you work with the numbers? This is open ended - have fun!
+
+```{r}
+spotify %>% 
+  mutate(playlist_name = str_to_upper(playlist_name)) %>% 
+  mutate(track_artist = str_to_lower(track_artist)) %>% 
+  mutate(playlist_start = str_sub(playlist_id, 1, 5)) %>% 
+  mutate(year = str_sub(track_album_release_date, 1, 4))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
