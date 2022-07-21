@@ -1,0 +1,197 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+
+is_leap_year <- function(year){
+  
+  if (year %% 100 == 0){
+    if(year %% 400 == 0){
+      return(TRUE)
+    } else{
+      return(FALSE)
+    }
+  }
+  
+  if(year %% 4 == 0){
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+  
+  
+}
+
+
+```
+
+this function tests whether a year is a leap year
+
+the first IF checks for centenary years (ie  year divisable by 100)
+IF the centenary year is also divisable by 400 then its a leap year
+Otherwise the centenary year is not a lear year
+
+the second IF checks ALL NON-centenary years (ie dont divide by 100)
+IF the year is divisable by 4 its a leap year
+otherwise the year is not a leap year
+
+testthat package
+
+```{r}
+library(testthat)
+```
+
+
+expect_equal(): checking that the object gives the answer we expect
+expect_error(): checking that the code throws an error when it should
+
+
+```{r}
+a <- 10
+```
+
+```{r}
+expect_equal(a, 10)
+```
+
+```{r}
+expect_equal(a, 11)
+```
+# test_that()
+
+```{r}
+
+test_that("Real leap year return TRUE", {
+  expect_equal(is_leap_year(2020), TRUE)
+  expect_equal(is_leap_year(2000), TRUE)
+})
+
+
+
+
+
+test_that("Real leap year return FALSE", {
+  expect_equal(is_leap_year(3), FALSE)
+  expect_equal(is_leap_year(1900), FALSE)
+})
+
+
+```
+
+Task - 5 minutes
+Take the following test code and write down an explanation of all the different parts:
+
+What is the test name?
+
+Test description is Character input returns an error, test name may be expect error
+
+What is the expectation?
+
+Expectation seems to be that in inputting a character there will be an error
+
+
+What are you expecting this test to do?
+
+seem to be wanting an error by inputting a character into a function that wants a numeric input.
+expect error
+
+
+
+
+Think carefully about the logic of this one before you write down your assumptions… you may want to try and run it to see what happens first.
+
+# second test : one expectation
+
+test_that("Character input returns an error", {
+  expect_error(is_leap_year("year"))
+})
+## Test passed 🎉
+
+
+test description is character input returns an erro
+
+
+```{r}
+test_that("Character input returns an error", {
+  expect_error(is_leap_year("year"))
+})
+
+test_that("Character input returns an error", {
+  expect_error(is_leap_year(2010))
+})
+```
+
+
+```{r}
+
+test_that("Non-numeric input returns an error", {
+  expect_error(is_leap_year("year"))
+  expect_error(is_leap_year(TRUE)) # R can force TURE/FALSE into year 1/0 so thats happening here and it doesnt run an error
+})
+
+```
+
+
+```{r}
+
+is_leap_year <- function(year){
+  
+  # add in a start condition for non-numeric data
+  if(!is.numeric(year)){
+    stop("Non-numeric input") # causes function to stop and kick out an error message, plus the text in the brackets
+  }
+  
+  if (year %% 100 == 0){
+    if(year %% 400 == 0){
+      return(TRUE)
+    } else{
+      return(FALSE)
+    }
+  }
+  
+  if(year %% 4 == 0){
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+  
+  
+}
+
+
+```
+
+
+```{r}
+
+test_that("Non-numeric input returns an error", {
+  expect_error(is_leap_year("year"))
+  expect_error(is_leap_year(TRUE)) # R can force TURE/FALSE into year 1/0 so thats happening here and it doesnt run an error
+})
+
+```
+
+Write a test that checks whether 2017 and 1900 are correctly identified as not being leap years by our is_leap_year() function.
+
+```{r}
+
+# This test expects the function "is leap_year" to return FALSE for the 2 given inputs namely 2017 and 1900
+
+test_that("Non leap years should return FALSE", {
+  expect_equal(is_leap_year(2017), FALSE)
+  expect_equal(is_leap_year(1900), FALSE)
+})
+
+```
+
+
+
+
+
+
+
+
+

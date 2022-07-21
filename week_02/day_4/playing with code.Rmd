@@ -1,0 +1,42 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+x <- 1:3
+y <- 3:1
+z <- 1:3
+
+x == y
+x == z
+
+identical(x, y)
+identical(x, z)
+
+all(x == y)
+all(x == z)
+
+any(x == y)
+any(x == z)
+
+
+```{r}
+
+x <- 1:3
+y <- 3:1
+z <- 1:3
+
+x == y
+x == z
+
+identical(x, y)
+identical(x, z)
+
+all(x == y)
+all(x == z)
+
+any(x == y)
+any(x == z)
+
+
+1:12 %o% 1:12
+```
