@@ -1,0 +1,253 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## Lists
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+x <- list(1, "a", TRUE, c(1, 2, 3)) # list allows various datatypes
+
+x
+
+vector <- 1:5
+vector
+
+as.list(vector) # can change a vector to a list
+```
+LIST OUTPUT BELOW
+[[1]] element 1
+[1] 1   has 1 element - a 1
+
+[[2]]
+[1] "a"
+
+[[3]]
+[1] TRUE
+
+[[4]]
+[1] 1 2 3
+
+## Subset
+
+```{r}
+x[[2]] returns the vector in the second position in a list
+x[2]   returns the second element AS A LIST
+```
+
+```{r}
+glimpse(x)
+```
+## Named list
+
+```{r}
+
+named_list <- list(a = "I love R", b = 1:10) # this names the elements of a list
+named_list
+
+glimpse(named_list)
+
+named_list$a # extracts the named element "a"
+```
+
+```{r}
+
+names(mtcars)
+
+mtcars[1]
+mtcars[[1]]
+
+mtcars %>% 
+  select(mpg) # same as single bracket above
+
+```
+
+### Nested List
+
+```{r}
+
+student_info <- list(
+                "Agnes" = list(height = 1.8, shoe_size = 8L),
+                "Bobby" = list(height = 2.1, gender = "Male"),
+                "Charlie" = list(gender = "Female", likes_beets = TRUE)
+)
+
+student_info
+
+str(student_info) # gives info about the list
+
+# take out agnes height using the "$"
+student_info$Agnes$height # use if it wont change
+
+
+
+student_info[["Agnes"]][["height"]] # use this if you want ot access later or with variables, is also safer if names etc change
+
+n <- "Agnes"
+student_info[[n]][["height"]] # works with variable names
+
+```
+# Task
+
+    Make a named list that contains a numeric vector and a character vector.
+    Access the second element of your list using double square brackets [[]]. What is it’s class?
+    Access the second element of your list using single square brackets []. What is it’s class?
+    Access the second element of your list by name. What is it’s class?
+
+
+```{r}
+
+neil_list <- list(a = 1, b ="Jim")
+
+neil_list[[2]] %>% 
+class() # returns character
+
+neil_list[2] %>% 
+class() # type of list 
+
+neil_list$b %>% 
+class() # returns vcharacter SO SAME AS DOUBLE BRACKETS
+
+neil_list[["b"]] %>% 
+class() # returns character SO SAME AS DOUBLE BRACKETS
+
+
+```
+
+## Matrices
+
+all the same character types
+
+```{r}
+
+matrix(1:4) # puts it into 1 column - COLUMN ORDER
+
+```
+
+```{r}
+
+matrix(1:4, nrow = 2) # puts it into 2 rows
+
+```
+
+
+
+```{r}
+
+matrix(1:12, ncol = 3) # puts it into 3 column
+
+```
+
+
+```{r}
+
+m <- matrix(1:12, ncol = 3, byrow = TRUE) # pforced into putting ito wors first
+m
+
+class(m) # type matrix
+typeof(m)
+
+```
+
+
+
+### Index a matrix
+
+```{r}
+m <- matrix(1:12, ncol = 3)
+
+m[1:2, 1:3] # select columns 1-3, rows 1-2
+
+
+```
+
+```{r}
+
+m[1, ] # gives the first row (NOTE THIS IS A VECTOR)
+
+m[ , 1] # gives the first column (AGAIN AS A VECTOR)
+
+
+
+```
+```{r}
+
+m[1, 2] # export the 1st row, second column value
+
+```
+
+```{r}
+
+m[2:3, ] # if asking for multiple rows and columns then will export as a matrix still
+
+```
+
+```{r}
+m[c(1,3), c(1,3)] # for non consecutive rows add them into a c()
+```
+```{r}
+m[ ,-2] # drops the second column
+```
+
+```{r}
+v <- 10:15
+v
+v * 2
+```
+Matrices work in a vectorised way
+```{r}
+m * 2 # mulitply all by 2
+m - 2 etc
+```
+
+```{r}
+rowSums(m) # sum the rows
+
+colSums(m) # sum the columns
+
+rowMeans(m) # mean of the rows
+
+colMeans(m) # mean the columns
+```
+
+Task - 5 minutes
+    Make a matrix with 3 rows and 4 columns. Each column should contain the numbers 1 to 3.
+    Find the element in the 2nd row, 3rd column.
+    Check that all the columns are identical by checking that their sums are the same.
+    
+```{r}
+
+npmatrix <- matrix(1:3, nrow = 3, ncol = 4)
+npmatrix
+
+#useful:
+rep(1:3, 3)
+rep(1:3, each = 3)
+```
+
+```{r}
+
+npmatrix[2, 3]
+
+```
+```{r}
+
+colSums(npmatrix)
+
+```
+```{r}
+
+
+
+
+colnames(m) <- paste0("col_", 1:3) #adds colnames, paste0 doesnt add a separator between things to join
+m
+rownames(m) <- paste0("row_", 1:4)
+
+m[, c("col_1", "col_2")]
+```
+

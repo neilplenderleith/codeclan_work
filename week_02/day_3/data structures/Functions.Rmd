@@ -1,0 +1,149 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## Functions
+
+R is mostly a functional programming language
+
+```{r}
+
+# nchar(x, type = "chars", allowNA = FALSE, keepNA = NA)
+# x - character vector
+
+# essentially arguments needs to be in the right order or specified eg data = y
+
+nchar("hello")
+```
+
+# writing own functions
+
+```{r}
+
+function_name <- function(parameter1, parameter2 = NULL, parameter3 = default_value){ # can add a default or let it know parmater not needed (NULL)
+  stuff to do
+  
+  last thing thts done is the "return" value
+  return(value) # can explicitly state the return value, often not needed
+}
+
+```
+
+
+```{r}
+multiply_by_5 <- function(x){
+  x*5
+}
+
+multiply_by_5(2)
+
+```
+
+```{r}
+multiply_by <- function(x, y){
+  x*y
+}
+multiply_by(2, 10)
+
+```
+
+
+```{r}
+
+multiply_by_5_default <- function(x, y = 5){
+  return(x * y)
+}
+multiply_by_5_default(2) # with a default of y=5, this fuction only needs one argument
+```
+
+
+
+```{r}
+make_price <- function(x){
+  paste0("£", x)
+  
+}
+
+make_price(5)
+make_price(123)
+```
+```{r}
+triangle_number <- function(x){
+  (x*(x+1))/2
+  
+}
+
+triangle_number(5)
+```
+
+$$
+T_n = \frac{n(n + 1)}{2}
+$$
+### Scope
+
+What can a function see?
+
+```{r}
+n <- 8
+
+multiply_by_n <- function(x){ # thi is bad practice - n is from the global environment
+  x*n
+  
+}
+multiply_by_n(2)
+```
+```{r}
+n <- 8
+
+multiply_by_n <- function(x, n){ # thi is much better - need the argument to be passed locally
+  x*n
+  
+}
+multiply_by_n(2, 9)
+```
+```{r}
+
+multiply_by_n <- function(x, n){ # dont bury returns in code - istead use the assignment operator then call it at the very end
+  ans <- x*n
+  if (ans %% 2 == 1){
+    z <- paste("x is odd")
+  } else {
+    z <- paste("x is even")
+  }
+  z
+  }
+
+multiply_by_n(2, 3)
+```
+
+
+### Best practice for writing functions
+
+Good
+name functions with verbs if you can
+
+add_3()
+format_number()
+
+
+```{r}
+
+
+
+```
+
+
+DRY Principle
+
+Dont Repeat Yourself
+
+
+
+## Debugging 
+
+```{r}
+debugonce(triangle_number) # debug function to step by ste go thorugh a fucntion line by line
+triangle_number(5)
+```
+
