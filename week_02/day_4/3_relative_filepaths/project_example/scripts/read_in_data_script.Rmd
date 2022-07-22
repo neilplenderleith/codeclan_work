@@ -3,11 +3,16 @@ title: "reading_in_data_script"
 output: html_document
 ---
 
+
+
 Let's use the same relative filepath as we did for the .R file
 
 ```{r}
 library(tidyverse)
+
 read_csv("data/students.csv")
+
+getwd()
 ```
 
 You will find you get an error, read the error, it tells us exactly what's going on! Below is mine (but your filepath may be slightly different depending on where you have saved this project). 
@@ -26,6 +31,9 @@ here::here()
 
 #use this to set the path to the data file
 read_csv(here("data/students.csv"))
+
+# here moves the working directory to the project firectory - helps with relative filepaths within a project
+# here() always takes us back to the working directory
 ```
 
 Note: there is also function named `here()` in the `lubridate` package, so, to avoid ambiguity, you may want to specify the use of `here()` from the package `here` by using `here::here()` to avoid any conflicts if you've loaded `lubridate`. 
