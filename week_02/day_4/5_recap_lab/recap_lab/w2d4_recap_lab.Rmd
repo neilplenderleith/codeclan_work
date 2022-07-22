@@ -34,6 +34,12 @@ diet_comp_clean <- country_diets %>%
 
 
 diet_comp_clean 
+
+# regex - sometimes its easier to replace part of a string than to extract it
+# sometimes its easier to match the part you're NOT interested in 
+
+# Ususally it is easier to start with a simple expression that diesnt do everything u want and then build on iy
+
 ```
 
 
@@ -44,7 +50,7 @@ Clean kcal_source categories by removing any unnecessary information. Then clean
 ```{r}
 
 diet_comp_clean <- diet_comp_clean %>% 
-  mutate(kcal_source = str_remove_all(kcal_source, " \\(FAO \\(2017\\)+")) %>% 
+  mutate(kcal_source = str_remove_all(kcal_source, " \\(FAO \\(2017\\)+")) %>% # could also replace with "" an empty space - then we dont get extra columns
   rename(country = Entity) %>% 
 janitor::clean_names()
  
