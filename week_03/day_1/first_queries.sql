@@ -26,7 +26,7 @@ WHERE id = 2;
 
 SELECT *
 FROM animals
-WHERE name = 'Ernest' AND species = 'snake';
+WHERE name = 'Ernest' AND species = 'Snake';
 
 -- because we are filtering on a primary key we should only expect 1 row
 SELECT *
