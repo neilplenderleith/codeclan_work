@@ -152,13 +152,43 @@ HAVING min(start_date) < '1991-01-01';
 
 
 
+-- find all employees in japan who earn over the company wide salary
+-- need to do a sub-query to find the total average salary and plug this into a where function
+-- generally a sub query will only have 1 return column 
 
+SELECT *
+FROM employees 
+WHERE country = 'Japan'
+AND salary > 	(
+				SELECT avg(salary)
+				FROM employees
+				);
 
+			
+			
+-- find all employees in legal who earn less than the mean salary in that department
+			
+SELECT *
+FROM employees 
+WHERE department = 'Legal'
+AND salary < 	(
+				SELECT avg(salary)
+				FROM employees 
+				WHERE department = 'Legal'
+				);
 
-
-
-
-
+			
+-- instructor added bits onto it
+SELECT count(id), country, salary
+FROM employees 
+WHERE department = 'Legal'
+AND salary < 	(
+				SELECT avg(salary)
+				FROM employees 
+				WHERE department = 'Legal'
+				)
+GROUP BY country, salary 
+ORDER BY salary, country; -- gotcha order by column order is important 
 
 
 
