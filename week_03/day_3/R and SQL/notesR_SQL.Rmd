@@ -1,0 +1,126 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Connecting R to a database
+
+- connect R to a postgres database omni pool
+
+## Dont put login credentials on github or any public place
+
+- be careful how we work with the login details
+
+-- host name
+-- username
+-- database
+-- port
+-- password
+
+2 main strategies for privacy
+
+- gitignore
+- store outside of a git repo altogether
+
+Load in secret login credentials into R
+
+```{r}
+source("../secrets.R")
+```
+
+Connecting to a database
+
+```{r}
+library(RPostgres)
+
+db_connection <- dbConnect(
+  drv = Postgres(),
+  host = om_host,
+  port = om_port,
+  dbname = om_atabase, # note this is mispelt in secrect.R so need to copy this missspelling over
+  user = om_username,
+  password = om_password,
+  bigint = "numeric"
+  
+)
+
+# now that we've created our connection object we don't need our credentials
+# anymore we can remove these from our environment
+
+rm(
+  om_username,
+  om_password
+  
+)
+
+```
+
+# testing our connection
+
+```{r}
+dbListTables(conn = db_connection)
+```
+
+## running queries
+
+```{r}
+
+employees <- dbGetQuery(conn = db_connection, statement = "SELECT * FROM employees;")
+employees
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+
+# can now run normal R commands on the data e.g.
+
+employees %>% 
+  filter(country == "Nigeria" & department == "Legal")
+
+```
+
+## Using GQL code chunks in R Notebooks
+
+# if we 
+```{sql, connection = db_connection}
+SELECT * 
+FROM employees
+limit 10;
+```
+
+# running a query and capturing the output
+```{sql, connection = db_connection, output.var = "out"}
+
+SELECT * 
+FROM employees
+limit 10;
+# Once we run this the output "out" will appear in the environment pane in the top right
+
+```
+
+Can call "out" in R:
+
+```{r}
+out %>% 
+  select(first_name, last_name, department)
+```
+
+
+# When we are finished we should disconnect - this is good practice
+
+```{r}
+dbDisconnect(conn = db_connection)
+```
+
+
+
+
+
+
+
+
+
+
